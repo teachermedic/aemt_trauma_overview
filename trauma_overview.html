@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AEMT Trauma Overview - Mastery Engine</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .flashcard {
+            perspective: 1000px;
+        }
+        .flashcard-inner {
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+        .flashcard.flipped .flashcard-inner {
+            transform: rotateY(180deg);
+        }
+        .flashcard-front, .flashcard-back {
+            backface-visibility: hidden;
+        }
+        .flashcard-back {
+            transform: rotateY(180deg);
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col">
+
+    <header class="bg-gradient-to-r content-box from-red-700 to-amber-700 text-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-3">
+                <i class="fa-solid fa-kit-medical text-3xl animate-pulse"></i>
+                <div>
+                    <h1 class="text-2xl font-black tracking-wide">AEMT PROTOCOL T-26</h1>
+                    <p class="text-xs text-red-100 font-medium uppercase tracking-widest">Trauma Assessment & Kinetics Engine</p>
+                </div>
+            </div>
+            <nav class="flex items-center gap-1 sm:gap-2 bg-black/20 p-1 rounded-xl text-sm font-semibold">
+                <button onclick="switchTab('learn')" id="btn-learn" class="px-4 py-2 rounded-lg bg-white text-red-800 shadow transition-all duration-200">
+                    <i class="fa-solid fa-book-open mr-2"></i>Core Concepts
+                </button>
+                <button onclick="switchTab('cards')" id="btn-cards" class="px-4 py-2 rounded-lg text-white hover:bg-white/10 transition-all duration-200">
+                    <i class="fa-solid fa-layer-group mr-2"></i>Flashcards (32)
+                </button>
+                <button onclick="switchTab('quiz')" id="btn-quiz" class="px-4 py-2 rounded-lg text-white hover:bg-white/10 transition-all duration-200">
+                    <i class="fa-solid fa-graduation-cap mr-2"></i>Graded Evaluation (25 Qs)
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 py-8">
+        
+        <section id="tab-learn" class="tab-content space-y-8">
+            <div class="bg-white border-l-4 border-red-600 rounded-xl p-6 shadow-sm">
+                <h2 class="text-xl font-bold text-slate-900 mb-2">Advanced EMS Trauma Overview</h2>
+                <p class="text-slate-600 leading-relaxed">
+                    Traumatic injury occurs when tissues are exposed to energy forces that cross their tolerance limit. As an Advanced EMT, your evaluation shouldn't just look for obvious surface wounds; you must read the physics of the scene to develop a deep <strong>Index of Suspicion</strong> for hidden, life-threatening damage.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div class="lg:col-span-1 space-y-3">
+                    <h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest px-2">Select Study Units</h3>
+                    <div class="space-y-2">
+                        <button onclick="loadTopic('kinetics')" id="topic-kinetics" class="topic-btn w-full text-left p-4 rounded-xl bg-white border border-red-200 shadow-sm font-semibold flex justify-between items-center text-red-900 border-l-4 border-l-red-600">
+                            <span>1. Trauma Kinetics & Physics</span>
+                            <i class="fa-solid fa-angles-right text-sm"></i>
+                        </button>
+                        <button onclick="loadTopic('collisions')" id="topic-collisions" class="topic-btn w-full text-left p-4 rounded-xl bg-white border border-slate-200 shadow-sm font-semibold flex justify-between items-center text-slate-700 hover:border-red-300 transition-all">
+                            <span>2. The 3 Collisions Rule</span>
+                            <i class="fa-solid fa-angles-right text-sm text-slate-400"></i>
+                        </button>
+                        <button onclick="loadTopic('bluntpen')" id="topic-bluntpen" class="topic-btn w-full text-left p-4 rounded-xl bg-white border border-slate-200 shadow-sm font-semibold flex justify-between items-center text-slate-700 hover:border-red-300 transition-all">
+                            <span>3. Blunt vs. Penetrating</span>
+                            <i class="fa-solid fa-angles-right text-sm text-slate-400"></i>
+                        </button>
+                        <button onclick="loadTopic('blasts')" id="topic-blasts" class="topic-btn w-full text-left p-4 rounded-xl bg-white border border-slate-200 shadow-sm font-semibold flex justify-between items-center text-slate-700 hover:border-red-300 transition-all">
+                            <span>4. Blast Injury Profiles</span>
+                            <i class="fa-solid fa-angles-right text-sm text-slate-400"></i>
+                        </button>
+                        <button onclick="loadTopic('lethaltriad')" id="topic-lethaltriad" class="topic-btn w-full text-left p-4 rounded-xl bg-white border border-slate-200 shadow-sm font-semibold flex justify-between items-center text-slate-700 hover:border-red-300 transition-all">
+                            <span>5. The Trauma Lethal Triad</span>
+                            <i class="fa-solid fa-angles-right text-sm text-slate-400"></i>
+                        </button>
+                        <button onclick="loadTopic('scores')" id="topic-scores" class="topic-btn w-full text-left p-4 rounded-xl bg-white border border-slate-200 shadow-sm font-semibold flex justify-between items-center text-slate-700 hover:border-red-300 transition-all">
+                            <span>6. Revised Trauma Score (RTS)</span>
+                            <i class="fa-solid fa-angles-right text-sm text-slate-400"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-2 bg-white rounded-2xl border border-slate-200 shadow-sm p-6 sm:p-8 flex flex-col justify-between">
+                    <div id="topic-display-area" class="space-y-6">
+                        </div>
+
+                    <div class="mt-8 pt-6 border-t border-slate-100 bg-slate-50 -mx-6 -mb-6 p-6 rounded-b-2xl">
+                        <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Have a question about this topic?</label>
+                        <div class="flex gap-2">
+                            <input type="text" id="user-followup-input" placeholder="Ask a follow-up (e.g., 'Explain how velocity squares in the kinetic energy equation')" class="w-full bg-white border border-slate-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-red-500">
+                            <button onclick="processFollowup()" class="bg-slate-800 text-white text-sm px-5 py-2 font-semibold rounded-lg hover:bg-slate-900 transition-all shrink-0">Ask AI</button>
+                        </div>
+                        <div id="followup-response" class="hidden mt-4 p-4 bg-white border border-amber-200 text-slate-700 text-sm rounded-lg leading-relaxed relative">
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="tab-cards" class="tab-content hidden space-y-6">
+            <div class="text-center max-w-xl mx-auto space-y-2">
+                <h2 class="text-2xl font-bold text-slate-900">Key Terms & Core Definitions</h2>
+                <p class="text-slate-500 text-sm">Click the card to instantly flip between the Advanced EMS High-Yield Key Term and its precise registry definition.</p>
+            </div>
+
+            <div class="flex justify-center items-center py-6">
+                <div class="flashcard w-full max-w-md h-72 cursor-pointer" onclick="this.classList.toggle('flipped')">
+                    <div class="flashcard-inner w-full h-full relative border border-slate-200 rounded-2xl shadow-md bg-white">
+                        <div class="flashcard-front absolute inset-0 p-8 flex flex-col justify-between items-center text-center bg-white rounded-2xl">
+                            <span id="card-index-front" class="text-xs font-bold text-slate-400 tracking-wider uppercase">Loading Counter...</span>
+                            <div class="my-auto space-y-3">
+                                <i class="fa-solid fa-book-bookmark text-3xl text-red-600"></i>
+                                <p id="card-front-text" class="text-xl font-black text-slate-800 px-4">Loading term...</p>
+                            </div>
+                            <span class="text-xs font-semibold text-red-600 bg-red-50 px-3 py-1 rounded-full"><i class="fa-solid fa-rotate mr-1.5"></i>Reveal Core Definition</span>
+                        </div>
+                        <div class="flashcard-back absolute inset-0 p-8 flex flex-col justify-between items-center text-center bg-slate-900 text-white rounded-2xl">
+                            <span id="card-index-back" class="text-xs font-bold text-slate-500 tracking-wider uppercase">Curriculum Definition Matrix</span>
+                            <div class="my-auto">
+                                <p id="card-back-text" class="text-base font-medium text-slate-200 leading-relaxed px-2">Loading definition content...</p>
+                            </div>
+                            <span class="text-xs font-semibold text-amber-400 bg-white/10 px-3 py-1 rounded-full"><i class="fa-solid fa-rotate mr-1.5"></i>Return to Key Term</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex justify-center items-center gap-6">
+                <button onclick="prevCard()" class="w-12 h-12 bg-white border border-slate-300 text-slate-700 rounded-full hover:bg-slate-50 transition shadow-sm flex items-center justify-center"><i class="fa-solid fa-arrow-left"></i></button>
+                <span id="card-counter" class="text-sm font-bold text-slate-600">Card 1 / 32</span>
+                <button onclick="nextCard()" class="w-12 h-12 bg-white border border-slate-300 text-slate-700 rounded-full hover:bg-slate-50 transition shadow-sm flex items-center justify-center"><i class="fa-solid fa-arrow-right"></i></button>
+            </div>
+        </section>
+
+        <section id="tab-quiz" class="tab-content hidden max-w-3xl mx-auto space-y-6">
+            <div id="quiz-start-box" class="bg-white border border-slate-200 rounded-2xl p-8 shadow-sm text-center space-y-6">
+                <div class="w-16 h-16 bg-red-50 text-red-600 rounded-full flex items-center justify-center text-2xl mx-auto">
+                    <i class="fa-solid fa-clipboard-check"></i>
+                </div>
+                <div class="space-y-2">
+                    <h2 class="text-2xl font-extrabold text-slate-900">National Registry Advanced Simulation Exam</h2>
+                    <p class="text-slate-500 text-sm max-w-md mx-auto">Evaluate your understanding of comprehensive trauma models using multiple-choice, select-all-that-apply, and complex clinical scenarios.</p>
+                </div>
+                <div class="bg-slate-50 rounded-xl p-4 text-left max-w-md mx-auto border border-slate-200 space-y-2 text-xs text-slate-600">
+                    <div class="flex items-center gap-2"><i class="fa-solid fa-check text-green-600"></i><span><strong>Total Items:</strong> 25 Advanced Registry Questions</span></div>
+                    <div class="flex items-center gap-2"><i class="fa-solid fa-check text-green-600"></i><span><strong>Grading Metric:</strong> Real-time Pass/Fail threshold calculated at 80%</span></div>
+                    <div class="flex items-center gap-2"><i class="fa-solid fa-check text-green-600"></i><span><strong>Rule Engine:</strong> Complete immediate rationale details provided upon conclusion</span></div>
+                </div>
+                <button onclick="startQuiz()" class="bg-gradient-to-r from-red-700 to-red-600 text-white px-8 py-3 font-bold rounded-xl shadow-md hover:from-red-800 hover:to-red-700 transition transform hover:-translate-y-0.5">Initialize Graded Assessment</button>
+            </div>
+
+            <div id="quiz-active-box" class="hidden bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden">
+                <div class="bg-slate-100 h-1.5 w-full">
+                    <div id="quiz-progress-bar" class="bg-red-600 h-1.5 w-0 transition-all duration-300"></div>
+                </div>
+                <div class="p-6 sm:p-8 space-y-6">
+                    <div class="flex justify-between items-center text-xs font-bold uppercase tracking-wider text-slate-400">
+                        <span id="quiz-type-badge" class="bg-slate-100 px-2.5 py-1 rounded text-slate-600">Trauma Core Evaluation</span>
+                        <span id="quiz-question-counter">Question 1 of 25</span>
+                    </div>
+                    <h3 id="quiz-question-text" class="text-lg font-bold text-slate-900 leading-snug">Question content placeholder text here?</h3>
+                    
+                    <div id="quiz-options-container" class="space-y-3">
+                        </div>
+
+                    <div class="flex justify-end pt-4 border-t border-slate-100">
+                        <button onclick="submitAnswer()" id="quiz-next-btn" class="bg-slate-800 text-white font-bold text-sm px-6 py-2.5 rounded-xl hover:bg-slate-900 transition flex items-center gap-2">
+                            <span>Submit Option</span><i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="quiz-result-box" class="hidden bg-white border border-slate-200 rounded-2xl p-8 shadow-sm text-center space-y-8">
+                <div class="space-y-2">
+                    <h2 class="text-2xl font-black text-slate-900">Performance Report Card</h2>
+                    <p class="text-slate-500 text-sm">Advanced EMS Field Competency Evaluation Metrics Dashboard</p>
+                </div>
+
+                <div class="inline-flex flex-col items-center justify-center w-36 h-36 rounded-full border-4 border-slate-100 bg-slate-50 shadow-inner relative">
+                    <span id="quiz-score-percent" class="text-4xl font-black text-red-600">0%</span>
+                    <span id="quiz-score-fraction" class="text-xs font-bold text-slate-400 mt-1">Score: 0 / 25</span>
+                </div>
+
+                <div id="quiz-verdict-box" class="p-4 rounded-xl max-w-md mx-auto font-bold text-sm">
+                    </div>
+
+                <div class="text-left space-y-4">
+                    <h3 class="text-sm font-bold text-slate-800 uppercase tracking-wide border-b pb-2"><i class="fa-solid fa-list-check mr-2 text-slate-500"></i>Question Breakdown & Explanations</h3>
+                    <div id="quiz-rationales-container" class="space-y-3 divide-y divide-slate-100">
+                        </div>
+                </div>
+
+                <button onclick="resetQuiz()" class="bg-slate-100 border border-slate-300 text-slate-700 font-bold px-6 py-2.5 rounded-xl hover:bg-slate-200 transition text-sm">Restart Diagnostic Evaluation</button>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-slate-900 text-slate-400 border-t border-slate-800 text-xs py-6">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-4">
+                <span><strong>AEMT System Mode:</strong> National Registry Mastery Engine</span>
+                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            </div>
+            <div><span>Interactive Training Module Dashboard Engine &bull; Canvas View API Ready</span></div>
+        </div>
+    </footer>
+
+    <script>
+        // DATABASE DICTIONARIES (Extracted directly from AEMT Chapter 26)
+        const topicsData = {
+            kinetics: {
+                title: "Trauma Kinetics & Physics",
+                subtitle: "How energy transitions determine the hidden mechanics of severe patient injury",
+                content: `
+                    <p class="leading-relaxed text-slate-600">Traumatic injury occurs strictly when the external energy applied to body tissues crosses their mechanical tolerance ceiling. Energy cannot be created or destroyed, but it converts forms rapidly. The kinetic energy engine relies on a key mathematical relationship:</p>
+                    <div class="bg-slate-900 text-amber-400 p-4 rounded-xl font-mono text-center my-4 border border-slate-800 shadow-inner">
+                        Kinetic Energy (KE) = &frac12; Mass &times; Velocity&sup2;
+                    </div>
+                    <p class="leading-relaxed text-slate-600">Notice that <strong>Velocity is squared</strong>. While doubling a vehicle or bullet's mass directly doubles the resulting kinetic energy, <strong>doubling its velocity increases the energy payload by four times</strong>. If a vehicle speeds up from 50 mph to 70 mph, the energy potential available to crush human tissue doubles instantly.</p>
+                `
+            },
+            collisions: {
+                title: "The Three Collisions Principle",
+                subtitle: "Predicting internal deep tissue trauma pattern dynamics on-scene",
+                content: `
+                    <p class="leading-relaxed text-slate-600">Every single blunt vehicle impact consists of an overlapping chain of three individual collision events. Evaluating the physical markers of each event dictates your index of suspicion:</p>
+                    <ul class="space-y-4 my-4 text-sm text-slate-600">
+                        <li><strong>1. Vehicle Impact:</strong> The machine strikes an object. The external damage maps the mechanical energy profile but not human flesh injuries.</li>
+                        <li><strong>2. Body Impact:</strong> The occupant slams into the interior structure (e.g., knees striking the dashboard, fracturing patellas).</li>
+                        <li><strong>3. Organ Impact:</strong> Internal organs hit rigid internal walls (e.g., brain strike causing Coup-Contrecoup damage, or heart inertia shearing the descending thoracic aorta).</li>
+                    </ul>
+                `
+            },
+            bluntpen: {
+                title: "Blunt vs. Penetrating Profiles",
+                subtitle: "Distinguishing energy dispersion pathways in soft tissue matrices",
+                content: `
+                    <p class="leading-relaxed text-slate-600">Trauma splits into clear diagnostic classifications depending on structural soft tissue compromise:</p>
+                    <p class="text-sm text-slate-600 mt-2"><strong>Blunt Forces:</strong> Energy is transmitted through the body wall without violating skin integrity. Bleeding inside solid vascular organs (liver, spleen) poses the chief hidden life threat.</p>
+                    <p class="text-sm text-slate-600 mt-2"><strong>Penetrating Vectors:</strong> Objects rupture surface skin layers. High-velocity projectile pathways create deep internal cavitation boundaries separate from the external entry wound due to energy shockwaves.</p>
+                `
+            },
+            blasts: {
+                title: "Blast Injury Physiology",
+                subtitle: "Deconstructing overpressure wave mechanical paths on human organ systems",
+                content: `
+                    <div class="space-y-3 my-4 text-xs">
+                        <div class="p-3 bg-red-50/50 rounded-lg"><strong class="text-red-900">Primary Blast Injury:</strong> Triggered directly by the mechanical overpressure shockwave traveling through the air. Gas-containing hollow organ systems are highly vulnerable. Expect middle ear tympanic membrane rupture, sudden pulmonary alveoli pop (blast lung), and direct hollow bowel perforations.</div>
+                        <div class="p-3 bg-amber-50/50 rounded-lg"><strong class="text-amber-900">Secondary Blast Injury:</strong> Caused by flying structural shrapnel, debris, or objects launched by the initial explosion energy hitting the patient. Results in multi-site penetrating trauma.</div>
+                        <div class="p-3 bg-slate-50 rounded-lg"><strong class="text-slate-900">Tertiary Blast Injury:</strong> Occurs when the patient's entire physical body is launched into the air by the pressure blast wind and impacts a rigid environment target object (e.g., ground, structural wall), creating severe fractures and head trauma.</div>
+                        <div class="p-3 bg-slate-50 rounded-lg"><strong class="text-slate-900">Quaternary/Miscellaneous:</strong> Encompasses toxic chemical gas inhalation, toxic flash burns, radiation leaks, or entrapment crush syndromes under collapsing buildings.</div>
+                    </div>
+                `
+            },
+            lethaltriad: {
+                title: "The Trauma Lethal Triad",
+                subtitle: "The deadly field cascade that shuts down vascular survival physiology",
+                content: `
+                    <p class="leading-relaxed text-slate-600">In severely hemorrhaging trauma patients, death is driven by a vicious, self-reinforcing systemic spiral known as the <strong>Lethal Triad</strong>:</p>
+                    <ul class="list-disc pl-5 text-sm space-y-1 text-slate-600 mt-2">
+                        <li><strong>Hypothermia:</strong> Inhibits enzymatic reactions of the clotting cascade.</li>
+                        <li><strong>Coagulopathy:</strong> Blood fails to clot effectively, accelerating systemic hemorrhage.</li>
+                        <li><strong>Acidosis:</strong> Lactic acid accumulates from hypoperfusion, degrading cardiac performance. Avoid aggressive acidic Normal Saline over-infusion.</li>
+                    </ul>
+                `
+            },
+            scores: {
+                title: "Revised Trauma Score (RTS)",
+                subtitle: "Physiologic scoring system for predicting survival probability",
+                content: `
+                    <p class="leading-relaxed text-slate-600">The <strong>Revised Trauma Score (RTS)</strong> balances quantitative metrics across three specific parameters: Glasgow Coma Scale (GCS), Systolic Blood Pressure (SBP), and Respiratory Rate (RR).</p>
+                    <p class="text-sm text-slate-600 mt-2">The metric ranges from <strong>0 up to 12</strong>. Any field evaluation triage score totaling <strong>&le; 11</strong> triggers an automatic redirection criteria rule directly to a Level I Trauma Center.</p>
+                `
+            }
+        };
+
+        const AIResponses = {
+            "velocity": "In the kinetic energy formula (KE = ½mv²), velocity is multiplied by itself (squared). This means if a car or bullet's speed doubles, the energy it delivers to tissues increases by FOUR times (2² = 4). If speed triples, energy increases by NINE times (3² = 9). This is why managing high-velocity trauma paths is significantly more critical than low-velocity impacts, regardless of the target object's mass.",
+            "airbag": "Airbags function by extending the duration of deceleration (Newton's Second Law). Instead of a passenger's chest stopping instantly (0.01 seconds) against a hard steering wheel, the airbag cushions the impact over 0.1 seconds. This 10x extension in time drops the force felt by the body down by 90%, turning an otherwise fatal impact into a survivable deceleration event.",
+            "blast lung": "Blast lung is a primary blast injury. When the rapid high-pressure shockwave hits the chest wall, it transfers directly through tissue into the air-filled lungs. This sudden overpressure pops the fragile microscopic alveoli walls, causing severe immediate internal alveolar hemorrhage, air embolisms, and rapid hypoxia. High-flow oxygen titration is mandatory.",
+            "triad": "The Trauma Lethal Triad consists of Hypothermia (cold core), Coagulopathy (failure of blood to form stable clots), and Acidosis (lactic acid buildup from poor oxygen delivery). Each condition worsens the other: hypothermia stops chemical clotting factors from functioning, leading to more bleeding, which creates further tissue hypoxia, dropping blood pH into severe acidosis.",
+            "rts": "The Revised Trauma Score ranges from 0 to 12. It assigns scores from 0 to 4 across three key observations: GCS, Systolic Blood Pressure, and Respiratory Rate. A perfect score is 12 (4 + 4 + 4). Any combined score of 11 or lower indicates a highly critical patient requiring rapid transport directly to a Level I or Level II Trauma Center.",
+            "default": "Excellent question. In advanced trauma protocols, we analyze the mechanical pathways of energy exchange to isolate unseen injuries. This includes observing car compartment intrusion depth, calculating fall height physics, and monitoring real-time physiologic markers to preemptively treat systemic shock before irreversible multi-system failure occurs."
+        };
+
+        // 32 DEDICATED VOCABULARY & CORE KEY TERM FLASHCARDS
+        const flashcards = [
+            { front: "Mechanism of Injury (MOI)", back: "The forces, energy exchange, and directional vectors that cause trauma to the human body." },
+            { front: "Index of Suspicion", back: "An AEMT's proactive, data-driven awareness and anticipation of hidden, underlying injuries based on the scene physics." },
+            { front: "Kinetic Energy Formula", back: "KE = ½mv² (Where m = mass and v = velocity). Demonstrates that velocity has a squared impact on injury severity." },
+            { front: "Work", back: "Force acting over a distance. In trauma, it represents the energy required to crush, tear, and deform human tissue." },
+            { front: "Newton's First Law of Motion", back: "An object at rest stays at rest, and an object in motion stays in motion unless acted upon by an external force." },
+            { front: "Newton's Second Law of Motion", back: "Force = Mass × Acceleration (or Deceleration). Shortening the stop time exponentially scales down the impact force." },
+            { front: "First Collision", back: "The physical impact of the vehicle machine structure against an external target object (e.g., wall, tree, another car)." },
+            { front: "Second Collision", back: "The physical impact of the passenger's body framework sliding forward or laterally against the vehicle's interior surfaces." },
+            { front: "Third Collision", back: "The internal visceral impact where soft tissue organs (brain, heart, liver) slam against rigid internal bone frames or ligaments." },
+            { front: "Coup Injury", back: "An internal tissue injury occurring directly at the point of initial impact (e.g., frontal brain striking the anterior skull)." },
+            { front: "Contrecoup Injury", back: "A rebound injury occurring on the exact opposite side of the initial impact as tissues snap backward." },
+            { front: "Waddell's Triad", back: "The classic pediatric pedestrian impact profile: 1) Femur fracture, 2) Intra-abdominal/thoracic injuries, 3) Contralateral head trauma." },
+            { front: "Up-and-Over Trajectory", back: "Frontal crash path where an unrestrained occupant flies up over the steering wheel, impacting the windshield with the head and torso." },
+            { front: "Down-and-Under Trajectory", back: "Frontal crash path where an unrestrained occupant slides down under the dash, forcing knees into the firewall, dislocating hips." },
+            { front: "Blunt Trauma", back: "Injury caused by energy transmission through the body wall without violating skin integrity or opening an external wound." },
+            { front: "Penetrating Trauma", back: "Injury where an external object pierces surface tissue boundaries, violating internal body cavities." },
+            { front: "Trajectory", back: "The specific geometric path or flight line a projectile follows through the air or through human tissue layers." },
+            { front: "Drag", back: "The structural wind resistance or tissue friction that slows down a projectile, transferring its kinetic energy to the body." },
+            { front: "Cavitation", back: "The formation of an open cavity path in tissue caused by radial kinetic energy shockwaves pushing fluids outward from a missile track." },
+            { front: "Primary Blast Injury", back: "Damage caused strictly by the supersonic overpressure shockwave traveling through air, targeting gas-filled hollow organs." },
+            { front: "Secondary Blast Injury", back: "Damage caused by flying shrapnel, structural debris, or objects launched by the initial explosion energy hitting the patient." },
+            { front: "Tertiary Blast Injury", back: "Damage sustained when the physical pressure wind launches the patient's entire body through the air into a hard object." },
+            { front: "Quaternary Blast Injury", back: "Indirect blast complications including toxic gas inhalation, flash burns, radiation exposure, or structural crush entrapment." },
+            { front: "Blast Lung", back: "Primary blast injury characterized by sudden pulmonary alveolar wall rupture, leading to deep internal hemorrhage and hypoxia." },
+            { front: "The Trauma Lethal Triad", back: "The self-reinforcing, fatal physiological spiral consisting of: Hypothermia, Coagulopathy, and Acidosis." },
+            { front: "Hypothermia (in Trauma)", back: "Core temperature drop that directly halts the temperature-dependent enzymatic reactions needed to run the blood clotting cascade." },
+            { front: "Coagulopathy", back: "A failure of the blood's biochemical systems to form stable fibrin webs, leading to uncontrolled internal bleeding." },
+            { front: "Acidosis (in Trauma)", back: "Drop in blood pH driven by lactic acid from anaerobic metabolism in hypoperfused cells. Depresses heart muscle contractility." },
+            { front: "Dilutional Coagulopathy", back: "Worsening of bleeding caused by over-infusing cell-free, non-clotting fluids (like Normal Saline), thinning out remaining clotting factors." },
+            { front: "Revised Trauma Score (RTS)", back: "A physiological triage metric (0–12) scoring three specific parameters: Glasgow Coma Scale, Systolic BP, and Respiratory Rate." },
+            { front: "Critical RTS Score Threshold", back: "An RTS total of 11 or lower. Demands automatic triage redirection to a designated Level I Trauma Center." },
+            { front: "The Golden Period", back: "The ideal window prioritizing rapid stabilization and transport, limiting field scene times to under 10 minutes for surgical entry." }
+        ];
+
+        // THE COMPREHENSIVE 25-QUESTION NREMT SIMULATION ARRAY
+        const quizQuestions = [
+            {
+                type: "single",
+                q: "A vehicle increases its speed from 20 mph to 80 mph. According to the laws of advanced trauma kinetics, by what factor has the available kinetic energy potential to cause structural tissue damage changed?",
+                options: ["It has doubled (2x)", "It has quadrupled (4x)", "It has increased by eight times (8x)", "It has increased by sixteen times (16x)"],
+                correct: [3],
+                rationale: "Velocity is squared in the kinetic energy equation (KE = ½mv²). Increasing speed from 20 to 80 mph represents a 4-fold increase in velocity. Squaring that factor (4²) results in 16 times more kinetic energy potential delivered to human tissue."
+            },
+            {
+                type: "single",
+                q: "An unrestrained driver strikes a dashboard during a crash. According to Newtonian mechanics, extending the deceleration window from 0.02 seconds to 0.20 seconds causes the structural force profile felt by the patient's body to:",
+                options: ["Increase exponentially by 400%", "Remain completely constant due to structural mass boundaries", "Decrease by exactly 90%", "Double instantly due to reactive acceleration fields"],
+                correct: [2],
+                rationale: "Force equals Mass times Acceleration/Deceleration (F=ma). Deceleration is change in velocity divided by time. By increasing the duration of deceleration by 10 times (from 0.02s to 0.20s), the structural impact force scales down inversely by 90%."
+            },
+            {
+                type: "single",
+                q: "During a high-velocity head-on vehicle collision, which internal visceral organ structure is most susceptible to tearing or complete shear rupture at its structural anatomical fixation point due to forward inertia?",
+                options: ["The Urinary Bladder wall", "The Descending Thoracic Aorta", "The Core Body of the Pancreas", "The Distal Sigmoid Colon segment"],
+                correct: [1],
+                rationale: "The descending thoracic aorta is structurally anchored tightly to the posterior thoracic spine wall, while the aortic arch is relatively mobile. Sudden deceleration causes the arch to plunge forward via inertia, shearing it at the connection point."
+            },
+            {
+                type: "single",
+                q: "When an unrestrained small child is struck head-on by a full-sized commercial vehicle's front bumper, the Advanced EMT must anticipate which classic mechanical trauma sequence (Waddell's Triad)?",
+                options: ["Calcaneus fractures, lumbar spine compression, and pelvic shear injury", "Femur fracture, intra-abdominal or intra-thoracic trauma, and contralateral head injury", "Cervical spine hyperflexion, bilateral wrist fractures, and clavicular pop", "Bilateral patellar fractures, posterior hip dislocation, and rib flail patterns"],
+                correct: [1],
+                rationale: "Waddell's Triad maps pediatric auto-vs-pedestrian mechanics. 1) Bumper hits thigh/femur. 2) Torso rolls forward onto the hood/grille (abdominal/thoracic crash). 3) Child is thrown off onto the asphalt, striking the head (contralateral head trauma)."
+            },
+            {
+                type: "single",
+                q: "An unrestrained driver slides along a 'down-and-under' trajectory path underneath the steering column during a frontal vehicle crash. Which structural injury pattern must an Advanced EMT anticipate first?",
+                options: ["Coup-Contrecoup brain contusions and steering column sternal flail segments", "Posterior hip dislocations and complex patellar or femur fractures", "Anterior longitudinal ligament tears of the high cervical spine matrix", "Isolated primary blast overpressure rupture of the middle ear cavities"],
+                correct: [1],
+                rationale: "The down-and-under path forces the knees directly into the low vehicle dashboard. This concentrates kinetic energy into the patella, driving the femur backward out of its acetabular house, resulting in classic posterior hip dislocations."
+            },
+            {
+                type: "single",
+                q: "In a severe T-bone (lateral) collision, the side impact causes the passenger's thoracic cavity to accelerate laterally before the head moves. This lateral bending physics is most likely to cause:",
+                options: ["Sternal flail segment collapse", "Lateral cervical spine fractures and shoulder girdle disruptions", "Isolated primary blast tympanic membrane pop", "Symmetric lower extremity compression tracks"],
+                correct: [1],
+                rationale: "Lateral impacts subject the cervical spine to severe lateral flexion, which easily fractures the lateral vertebral facets and causes extreme traction injuries to the brachial plexus nerve bundle on the contralateral side."
+            },
+            {
+                type: "single",
+                q: "A vehicle at a complete stop is struck violently from behind. The sudden acceleration causes the patient's head to whip backward relative to the torso. This mechanism of injury primarily compromises:",
+                options: ["The ligamentum teres of the liver house", "The posterior spinous processes of the lumbar vertebrae", "The anterior longitudinal ligaments of the cervical spine", "The cribriform plate of the anterior skull vault"],
+                correct: [2],
+                rationale: "Rear-end impacts cause the seat back to accelerate the torso forward, leaving the head behind via inertia. This severe hyperextension path stretches and breaks the structural anterior longitudinal ligaments of the cervical spine columns."
+            },
+            {
+                type: "single",
+                q: "Why are rollover motor vehicle collisions classified as one of the most unpredictable and lethal mechanisms of injury evaluated in the field?",
+                options: ["They generate purely linear low-energy deceleration paths", "The multiple directions of impact generate unpredictable shear forces and dramatically increase ejection risks", "They protect internal visceral organs completely from third-collision inertia", "They neutralize the effects of velocity squaring rules entirely"],
+                correct: [1],
+                rationale: "Rollovers involve a succession of multiple impact vectors as the vehicle hits the ground at different angles. This causes unpredictable organ-on-bone collisions and exposes occupants to catastrophic centrifugal forces and ejection."
+            },
+            {
+                type: "single",
+                q: "A patient presents with a clean, 3-inch stab wound from a static knife to the left upper quadrant of the abdomen. The path of tissue damage is safely assumed to be:",
+                options: ["Extremely widespread due to secondary shockwave cavitation", "Completely unpredictable due to energy ricochet vectors off internal tissue boundaries", "Perfectly linear and confined strictly to the physical dimensions of the blade", "Accompanied by widespread primary blast acoustic overpressure pathways"],
+                correct: [2],
+                rationale: "Knives and screwdrivers are low-energy, low-velocity projectiles. They cause tissue disruption strictly along their immediate physical contact track. Widespread cavitation is completely absent in low-velocity penetration trauma."
+            },
+            {
+                type: "single",
+                q: "As a high-velocity rifle projectile passes through solid visceral organ tissue like the liver, it forms a temporary cavity. This temporary cavitation tissue destruction is caused by:",
+                options: ["Chemical components in the bullet jacket reacting with structural iron cells", "Radial shockwaves transferring kinetic energy outward from the missile path", "The ambient temperature of the hot air pocket expanding the portal vein", "Vacuum pressures drawing room air backward through the structural entry path"],
+                correct: [1],
+                rationale: "High-velocity weapons (speed > 2000-3000 feet/second) transfer huge amounts of kinetic energy. This energy creates a violent radial shockwave that stretches and tears tissues far beyond the physical diameter of the bullet itself."
+            },
+            {
+                type: "single",
+                q: "Which exact diagnostic indicator represents a classic, isolated primary blast injury from an explosive detonation pressure wave?",
+                options: ["Deep shrapnel lacerations throughout the quadriceps matrix", "Blast lung pulmonary alveolar hemorrhage and tympanic membrane rupture", "Femur fracture resulting from a high-wind structural environmental wall launch", "Airway burns from toxic hyperthermal carbon smoke inhalation pathways"],
+                correct: [1],
+                rationale: "Primary blast injuries are caused directly by the supersonic overpressure wave. This force wave targets gas-containing hollow boundaries, compressing air pockets until they burst, classically destroying ear drums and lung alveoli."
+            },
+            {
+                type: "single",
+                q: "A construction worker standing near an explosive blast is struck in the thigh by a flying piece of concrete rebar. This is classified as a:",
+                options: ["Primary blast injury", "Secondary blast injury", "Tertiary blast injury", "Quaternary blast injury"],
+                correct: [1],
+                rationale: "Secondary blast injuries occur when flying pieces of debris, structural shrapnel, or objects launched by the explosive force blast wind directly hit the patient's body, causing complex penetrating and blunt wounds."
+            },
+            {
+                type: "single",
+                q: "A patient is thrown 15 feet through the air by an explosive blast wind, landing forcefully against a concrete barrier. The resulting bilateral radius/ulna fractures are classified as a:",
+                options: ["Primary blast injury", "Secondary blast injury", "Tertiary blast injury", "Quaternary blast injury"],
+                correct: [2],
+                rationale: "Tertiary blast injuries describe the damage sustained when the explosion's physical pressure wind launches the patient's entire physical body through the air into a hard environmental target object like a floor, tree, or wall."
+            },
+            {
+                type: "single",
+                q: "Following a chemical warehouse explosion, an unconscious patient is pulled from a room filled with thick, yellow smoke. They exhibit severe airway stridor and bronchospasm. This is a:",
+                options: ["Secondary blast injury", "Tertiary blast injury", "Quaternary blast injury", "Primary blast overpressure complication"],
+                correct: [2],
+                rationale: "Quaternary blast injuries encompass all health complications, illnesses, or structural body burns that develop indirectly from explosions but are not caused by primary overpressure, shrapnel, or physical body launches."
+            },
+            {
+                type: "single",
+                q: "How does systemic metabolic hypothermia directly accelerate the cascade of the Trauma Lethal Triad?",
+                options: ["It induces severe vasodilation, which increases internal perfusion tracking", "It inhibits the temperature-dependent enzymatic reactions of the clotting cascade, driving coagulopathy", "It speeds up anaerobic glycolysis, which rapidly eliminates excess lactic acid stores", "It causes immediate fluid shifts out of the interstitial tissue houses"],
+                correct: [1],
+                rationale: "The enzymes responsible for building stable fibrin webs require a normal core temperature of 37°C. When a hemorrhaging patient turns cold, these enzymes cease function, preventing blood clotting and worsening internal hemorrhage."
+            },
+            {
+                type: "single",
+                q: "Why does a state of uncorrected metabolic acidosis worsen the mechanical survival profile of a hemorrhaging trauma patient?",
+                options: ["It accelerates cellular aerobic production, causing overwhelming metabolic waste load", "It decreases myocardial contractility and diminishes peripheral vascular responsiveness to catecholamines", "It forces immediate shifting of pH lines toward an uncorrectable hyper-alkaline state", "It neutralizes primary blast injury overpressure waves entirely"],
+                correct: [1],
+                rationale: "Acidosis shifts the blood pH down below normal limits. This hyper-acidic fluid bathes the heart muscle and blood vessel lining, blunting their response to endogenous epinephrine and severely depressing mechanical cardiac contractility."
+            },
+            {
+                type: "single",
+                q: "Why does over-infusing a severely hypotensive trauma patient with large volumes of cold Normal Saline solution accelerate the Trauma Lethal Triad?",
+                options: ["It eliminates lactic acid and reverses metabolic acidosis too aggressively", "It triggers massive immediate hyperthermia within central core visceral organs", "It contributes directly to dilutional coagulopathy and worsening hyperchloremic metabolic acidosis", "It causes immediate rupture of all surrounding vascular structural walls"],
+                correct: [2],
+                rationale: "Normal Saline contains high concentrations of chloride, which can induce hyperchloremic metabolic acidosis. Furthermore, infusing large volumes of fluid devoid of clotting factors thins the blood, washing away any fragile clots that have formed."
+            },
+            {
+                type: "single",
+                q: "A patient presents with a Glasgow Coma Scale (GCS) score of 7, a Systolic Blood Pressure of 64 mmHg, and a Respiratory Rate of 5 breaths per minute. Based on the component parameters of the Revised Trauma Score (RTS), what point value is assigned to this patient's presentation?",
+                options: ["GCS = 4, SBP = 4, RR = 4; Total RTS = 12", "GCS = 2, SBP = 2, RR = 1; Total RTS = 5", "GCS = 1, SBP = 0, RR = 0; Total RTS = 1", "GCS = 3, SBP = 2, RR = 2; Total RTS = 7"],
+                correct: [1],
+                rationale: "RTS breakdown: GCS 6-8 maps to 2 points. SBP 50-75 mmHg maps to 2 points. Respiratory Rate 1-5 breaths/min maps to 1 point. Adding these individual component parameters gives a total score of 2 + 2 + 1 = 5."
+            },
+            {
+                type: "single",
+                q: "You are calculating a field Revised Trauma Score on a multi-system trauma patient. Which total calculated score represents the absolute threshold where a patient must be automatically redirected to a designated Level I Trauma Center?",
+                options: ["Any score Less than or equal to 11", "Any score exactly matching 12", "Any score that falls between 13 and 15", "Scores that are even numbers only"],
+                correct: [0],
+                rationale: "A perfect RTS is 12. According to standard national CDC field triage guidelines, any multi-system trauma evaluation yielding an RTS calculation less than or equal to 11 signals critical physiologic instability requiring immediate Level I care."
+            },
+            {
+                type: "single",
+                q: "The modern clinical focus of the 'Golden Period' or 'Golden Hour' in prehospital trauma systems emphasizes:",
+                options: ["Administering maximum fluid volume over 60 minutes in the field", "Minimizing field scene times to less than 10 minutes to prioritize rapid surgical intervention", "Performing detailed secondary head-to-toe exams prior to moving to the ambulance", "Waiting for air medical assets regardless of proximity to ground trauma facilities"],
+                correct: [1],
+                rationale: "The 'Golden Hour' highlights that survival drops if definitive surgical bleeding control isn't reached within an hour of injury. Since AEMTs cannot surgically repair internal organs, field scene time must be limited to under 10 minutes."
+            },
+            {
+                type: "single",
+                q: "Scenario Case: A 24-year-old male was the restrained driver of a vehicle that struck a concrete bridge abutment at 55 mph. Frontal intrusion into the footwell is 18 inches. The patient is pale, diaphoretic, and tachycardic at 128 bpm, with a blood pressure of 92/64 mmHg. He complains of tearing retrosternal chest pain and shortness of breath. Which life-threatening injury path must you immediately suspect?",
+                options: ["Isolated patellar fracture from dash impact", "Traumatic aortic disruption or shear injury", "Simple low-energy linear rib contusion", "Primary blast overpressure lung injury"],
+                correct: [1],
+                rationale: "High-speed head-on impact into an unyielding object creates a massive deceleration profile. The presence of tearing retrosternal chest pain combined with systemic signs of uncompensated shock indicates an aortic shear injury."
+            },
+            {
+                type: "single",
+                q: "Scenario Case: You respond to an underground mining explosion. A 38-year-old female patient was positioned 12 feet from the epicenter. She is conscious but disoriented, coughing up frothy pink sputum. Her tympanic membranes are bilaterally ruptured, and her oxygen saturation is 84% on room air. She has no external signs of bleeding or deformities. What is the priority path of field management?",
+                options: ["Immediate splinting of all long bones and 2 liters of normal saline fluid boluses", "High-flow oxygen titration via non-rebreather or CPAP, keeping a high index of suspicion for systemic air embolisms", "Applying a rigid cervical collar and waiting for air medical transport before initiating oxygen", "Washing out both ears with sterile water to remove blast debris fields"],
+                correct: [1],
+                rationale: "This patient exhibits definitive signs of primary blast injury (ruptured eardrums and blast lung alveolar hemorrhage). This requires high-concentration oxygen administration to support gas exchange and combat hypoxia."
+            },
+            {
+                type: "multi",
+                q: "Multiple-Response: An Advanced EMT is evaluating a patient who sustained significant blunt abdominal trauma from an ATV rollover. Which signs or symptoms indicate a high probability of progressive, hidden retroperitoneal or intra-abdominal hemorrhage? (Select All That Apply)",
+                options: ["Progressive rigidity and guarding of the abdominal wall layers", "An isolated, transient increase in Glasgow Coma Scale scoring parameters", "Narrowing pulse pressure accompanied by unexplained tachycardia", "Ecchymosis developing around the umbilicus (Cullen's sign) or flanks", "Flushed, dry skin boundaries across all four extremities"],
+                correct: [0, 2, 3],
+                rationale: "Signs of intra-abdominal bleeding include abdominal rigidity/guarding from blood irritating the peritoneum, narrowing pulse pressure/tachycardia (shock), and delayed bruising around the belly button (Cullen's sign) or flanks (Grey Turner's sign)."
+            },
+            {
+                type: "multi",
+                q: "Multiple-Response: You are managing a multi-system trauma patient following a high-speed vehicle ejection. To proactively combat the onset of the Trauma Lethal Triad in the prehospital phase, which interventions should the AEMT deploy? (Select All That Apply)",
+                options: ["Aggressively adjusting ambulance environmental heat settings to maintain core warmth", "Infusing 3 to 4 liters of unheated Normal Saline rapidly to maximize blood pressure lines", "Applying high-efficiency commercial warming blankets directly to the patient's body", "Utilizing small, titrated crystalloid fluid boluses (250mL) strictly to preserve a minimum palpable radial pulse", "Administering chilled ice packs to the axilla to slow down general circulation parameters"],
+                correct: [0, 2, 3],
+                rationale: "Combating the Lethal Triad requires aggressive heat preservation (turning up cabin heat, using warming blankets) and restrictive fluid administration (small 250mL boluses to maintain a radial pulse) to avoid dilutional coagulopathy and hyperchloremic acidosis."
+            },
+            {
+                type: "single",
+                q: "Scenario Case: An 18-year-old female fell 25 feet from a balcony. Upon assessment, she opens her eyes only in response to deep painful stimuli, withdraws from pain, and utters incomprehensible sounds. Her blood pressure is 104/70 mmHg, and her respirations are 24 breaths per minute and shallow. Calculate her GCS and translate it to its corresponding RTS value.",
+                options: ["GCS = 12, RTS = 11; Stable status, transport to a local urgent care clinic", "GCS = 5, RTS = 7; Critical status, transport to a psychiatric medical facility", "GCS = 8 (RTS parameter points: 2), SBP points: 4, RR points: 3; Total RTS = 9. Critical status requiring a Level I Trauma Center", "GCS = 15, RTS = 12; Uninjured status, release to guardian fields"],
+                correct: [2],
+                rationale: "GCS calculation: Eyes open to pain = 2. Incomprehensible sounds = 2. Withdraws from pain = 4. Total GCS = 8. RTS translation: GCS 6-8 = 2 points. SBP >89 mmHg = 4 points. RR 10-29 bpm = 3 points. Total RTS = 2 + 4 + 3 = 9, signaling a Level I Trauma Center redirect."
+            }
+        ];
+
+        // STATE LOGIC VARIABLE STACKS
+        let currentCardIndex = 0;
+        let currentQuizIndex = 0;
+        let quizScore = 0;
+        let userAnswers = [];
+
+        // NAVIGATION VIEW TABS CONTROLLER
+        window.onload = function() {
+            loadTopic('kinetics');
+            renderCard();
+        };
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+
+            ['learn', 'cards', 'quiz'].forEach(t => {
+                const btn = document.getElementById(`btn-${t}`);
+                if(t === tabId) {
+                    btn.className = "px-4 py-2 rounded-lg bg-white text-red-800 shadow transition-all duration-200";
+                } else {
+                    btn.className = "px-4 py-2 rounded-lg text-white hover:bg-white/10 transition-all duration-200";
+                }
+            });
+        }
+
+        // LEARN VIEW CONTROLLER ENGINE
+        function loadTopic(key) {
+            const data = topicsData[key];
+            
+            document.querySelectorAll('.topic-btn').forEach(btn => {
+                btn.className = "topic-btn w-full text-left p-4 rounded-xl bg-white border border-slate-200 shadow-sm font-semibold flex justify-between items-center text-slate-700 hover:border-red-300 transition-all";
+                const icon = btn.querySelector('i');
+                icon.className = "fa-solid fa-angles-right text-sm text-slate-400";
+            });
+
+            const targetBtn = document.getElementById(`topic-${key}`);
+            targetBtn.className = "topic-btn w-full text-left p-4 rounded-xl bg-white border border-red-200 shadow-sm font-semibold flex justify-between items-center text-red-900 border-l-4 border-l-red-600";
+            targetBtn.querySelector('i').className = "fa-solid fa-angles-right text-sm text-red-600";
+
+            document.getElementById('topic-display-area').innerHTML = `
+                <div class="space-y-2">
+                    <span class="text-xs font-bold text-red-600 uppercase tracking-widest bg-red-50 px-3 py-1 rounded-md">Advanced Study Unit</span>
+                    <h3 class="text-2xl font-extrabold text-slate-900 tracking-tight">${data.title}</h3>
+                    <p class="text-sm text-slate-400 font-medium">${data.subtitle}</p>
+                </div>
+                <div class="prose prose-slate max-w-none text-slate-700 text-sm sm:text-base space-y-4">
+                    ${data.content}
+                </div>
+            `;
+
+            document.getElementById('followup-response').classList.add('hidden');
+            document.getElementById('user-followup-input').value = "";
+        }
+
+        function processFollowup() {
+            const rawQuery = document.getElementById('user-followup-input').value.trim().toLowerCase();
+            if(!rawQuery) return;
+
+            const responseBox = document.getElementById('followup-response');
+            responseBox.classList.remove('hidden');
+            responseBox.innerHTML = `<div class="flex items-center gap-2 text-slate-500"><i class="fa-solid fa-spinner animate-spin"></i><span>Processing clinical data track...</span></div>`;
+
+            setTimeout(() => {
+                let textOut = AIResponses["default"];
+                if(rawQuery.includes("velocity") || rawQuery.includes("speed") || rawQuery.includes("ke")) textOut = AIResponses["velocity"];
+                else if(rawQuery.includes("airbag") || rawQuery.includes("cushion") || rawQuery.includes("second law")) textOut = AIResponses["airbag"];
+                else if(rawQuery.includes("lung") || rawQuery.includes("blast") || rawQuery.includes("primary")) textOut = AIResponses["blast lung"];
+                else if(rawQuery.includes("triad") || rawQuery.includes("lethal") || rawQuery.includes("acidosis")) textOut = AIResponses["triad"];
+                else if(rawQuery.includes("rts") || rawQuery.includes("score") || rawQuery.includes("revised")) textOut = AIResponses["rts"];
+
+                responseBox.innerHTML = `
+                    <button onclick="this.parentElement.classList.add('hidden')" class="absolute top-2 right-2 text-slate-400 hover:text-slate-600 text-xs"><i class="fa-solid fa-xmark"></i></button>
+                    <div class="flex gap-2.5">
+                        <i class="fa-solid fa-robot text-red-700 text-base mt-0.5"></i>
+                        <div>
+                            <span class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Interactive Explainer Context</span>
+                            <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">${textOut}</p>
+                        </div>
+                    </div>
+                `;
+            }, 400);
+        }
+
+        // ACTIVE FLASHCARDS CONTROL MANAGEMENT
+        function renderCard() {
+            const card = flashcards[currentCardIndex];
+            document.querySelector('.flashcard').classList.remove('flipped');
+            
+            document.getElementById('card-index-front').innerText = `Vocabulary Key Term ${currentCardIndex + 1} of ${flashcards.length}`;
+            document.getElementById('card-counter').innerText = `Card ${currentCardIndex + 1} / ${flashcards.length}`;
+            document.getElementById('card-front-text').innerText = card.front;
+            document.getElementById('card-back-text').innerText = card.back;
+        }
+
+        function nextCard() {
+            currentCardIndex = (currentCardIndex + 1) % flashcards.length;
+            renderCard();
+        }
+
+        function prevCard() {
+            currentCardIndex = (currentCardIndex - 1 + flashcards.length) % flashcards.length;
+            renderCard();
+        }
+
+        // SIMULATED NREMT INTERACTIVE QUIZ ENGINE
+        function startQuiz() {
+            currentQuizIndex = 0;
+            quizScore = 0;
+            userAnswers = [];
+            document.getElementById('quiz-start-box').classList.add('hidden');
+            document.getElementById('quiz-result-box').classList.add('hidden');
+            document.getElementById('quiz-active-box').classList.remove('hidden');
+            showQuestion();
+        }
+
+        function showQuestion() {
+            const item = quizQuestions[currentQuizIndex];
+            
+            const pct = (currentQuizIndex / quizQuestions.length) * 100;
+            document.getElementById('quiz-progress-bar').style.width = `${pct}%`;
+            document.getElementById('quiz-question-counter').innerText = `Question ${currentQuizIndex + 1} of ${quizQuestions.length}`;
+            document.getElementById('quiz-question-text').innerText = item.q;
+
+            const badge = document.getElementById('quiz-type-badge');
+            if(item.type === "multi") {
+                badge.innerText = "Multiple-Response (Select All That Apply)";
+                badge.className = "bg-amber-100 px-2.5 py-1 rounded text-amber-800 font-bold text-xs";
+            } else {
+                badge.innerText = "Single-Response Multiple Choice";
+                badge.className = "bg-slate-100 px-2.5 py-1 rounded text-slate-600 text-xs";
+            }
+
+            let optionsHTML = "";
+            item.options.forEach((opt, idx) => {
+                const inputType = item.type === "multi" ? "checkbox" : "radio";
+                optionsHTML += `
+                    <label class="flex items-center gap-3 p-4 rounded-xl border border-slate-200 hover:bg-slate-50 cursor-pointer transition-all relative">
+                        <input type="${inputType}" name="quiz-opt" value="${idx}" class="w-4 h-4 text-red-600 focus:ring-red-500 border-slate-300 rounded">
+                        <span class="text-sm font-medium text-slate-700">${opt}</span>
+                    </label>
+                `;
+            });
+            document.getElementById('quiz-options-container').innerHTML = optionsHTML;
+        }
+
+        function submitAnswer() {
+            const checkedBoxes = document.querySelectorAll('input[name="quiz-opt"]:checked');
+            if(checkedBoxes.length === 0) {
+                alert("Protocol Notice: You must select at least one active option before advancing.");
+                return;
+            }
+
+            const item = quizQuestions[currentQuizIndex];
+            let currentSelections = [];
+            checkedBoxes.forEach(cb => {
+                currentSelections.push(parseInt(cb.value));
+            });
+
+            userAnswers.push(currentSelections);
+
+            const isCorrect = item.correct.length === currentSelections.length && 
+                              item.correct.every(val => currentSelections.includes(val));
+
+            if(isCorrect) {
+                quizScore++;
+            }
+
+            currentQuizIndex++;
+            if(currentQuizIndex < quizQuestions.length) {
+                showQuestion();
+            } else {
+                finishQuiz();
+            }
+        }
+
+        function finishQuiz() {
+            document.getElementById('quiz-active-box').classList.add('hidden');
+            document.getElementById('quiz-result-box').classList.remove('hidden');
+
+            const pctScore = Math.round((quizScore / quizQuestions.length) * 100);
+            document.getElementById('quiz-score-percent').innerText = `${pctScore}%`;
+            document.getElementById('quiz-score-fraction').innerText = `Score Metric: ${quizScore} / ${quizQuestions.length}`;
+
+            const verdictBox = document.getElementById('quiz-verdict-box');
+            if(pctScore >= 80) {
+                verdictBox.className = "p-4 rounded-xl max-w-md mx-auto font-bold text-sm bg-green-50 text-green-800 border border-green-200";
+                verdictBox.innerHTML = `<i class="fa-solid fa-circle-check mr-2"></i>COMPETENCY PASSED: Verified Field Ready Status`;
+            } else {
+                verdictBox.className = "p-4 rounded-xl max-w-md mx-auto font-bold text-sm bg-red-50 text-red-800 border border-red-200";
+                verdictBox.innerHTML = `<i class="fa-solid fa-triangle-exclamation mr-2"></i>REMEDIAL ASSIGNMENT: Score falls below pass ceiling (80%)`;
+            }
+
+            let rationalesHTML = "";
+            quizQuestions.forEach((item, idx) => {
+                const userAnsArr = userAnswers[idx] || [];
+                const isCorrect = item.correct.length === userAnsArr.length && 
+                                  item.correct.every(val => userAnsArr.includes(val));
+                
+                const userLabels = userAnsArr.map(i => item.options[i]).join(" | ");
+                const correctLabels = item.correct.map(i => item.options[i]).join(" | ");
+
+                rationalesHTML += `
+                    <div class="pt-4 first:pt-0 space-y-2">
+                        <div class="flex items-start justify-between gap-4">
+                            <h4 class="text-xs sm:text-sm font-bold text-slate-900">${idx + 1}. ${item.q}</h4>
+                            <span class="text-xs font-bold px-2.5 py-0.5 rounded-full shrink-0 ${isCorrect ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-700'}">
+                                ${isCorrect ? '<i class="fa-solid fa-check mr-1"></i>Correct' : '<i class="fa-solid fa-xmark mr-1"></i>Incorrect'}
+                            </span>
+                        </div>
+                        <p class="text-xs text-slate-500"><strong>Your Answer:</strong> ${userLabels || 'None'} <br> <strong class="text-slate-800">Correct Target:</strong> ${correctLabels}</p>
+                        <div class="p-3 bg-slate-50 rounded-lg text-xs text-slate-600 border border-slate-100 italic">
+                            <strong>AI Rationale Verification:</strong> ${item.rationale}
+                        </div>
+                    </div>
+                `;
+            });
+            document.getElementById('quiz-rationales-container').innerHTML = rationalesHTML;
+        }
+
+        function resetQuiz() {
+            document.getElementById('quiz-result-box').classList.add('hidden');
+            document.getElementById('quiz-start-box').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
